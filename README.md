@@ -3,8 +3,13 @@
 ### TBD On what our project is going to be
 
 # Roadmap
+## APIs Used
+- Amadeus
+- Flight Offers Search API
+- Yelp Dataset
 ## Languages Used
-- 
+- JS
+- JSX
 ## Framework Used
 - React
 ## TUI 
