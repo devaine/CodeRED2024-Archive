@@ -1,0 +1,14 @@
+{
+  "name": "codered2024",
+  "version": "1.0.0",
+  "description": "doing random stuff",
+  "main": "amadeus.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "amadeus": "^9.1.0"
+  }
+}
