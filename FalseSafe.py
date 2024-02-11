@@ -62,7 +62,7 @@ def main():
     print("***********")
     print("For departure location: ",departure_city)
     print("To arrival location: ",arrival_city)
-    print("Here is your best fligt option: ")
+    print("Here is your best fligt option for ECONOMY class: ")
     display_flight_details(best_flight)
 
 if __name__ == "__main__":
