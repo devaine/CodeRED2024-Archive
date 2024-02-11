@@ -103,9 +103,11 @@ def extract_currency(origin):
 
 
 # sentence = "from US to Canada on 1/1/70 with two men and one women"
-sentence = "John went to the park with Mary and his dog."
+sentence = "Flights from Boston to Madrid from June 7th to June 14th"
 
-# print(extract_origin(sentence))
-# print(extract_date(sentence))
-# print(extract_adults(sentence))
+origin=extract_origin(sentence)
+print(origin)
+print(extract_origin(origin))
+print(extract_date(sentence))
+print(extract_adults(sentence))
 extract_adults(sentence)
