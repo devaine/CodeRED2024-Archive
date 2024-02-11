@@ -77,37 +77,44 @@ def extract_adults(text):
 
     print(f"Number of people in the string: {people_count}")
 
-def extract_currency(origin):
+def extract_country(origin):
     country=""
-    with open('worldcities.csv','r') as csv_file:
+    with open('worldcities.csv','r',errors='ignore') as csv_file:
         csv_reader = csv.reader(csv_file)
 
-        next(csv_reader)
+        
         for line in csv_reader:
-            if(line[0].lower()==origin.lower()):
-                country=line[4].lower()
-                break
-    
-    with open('codes-all.csv','r') as csv_file:
+            if(line[0].upper()==origin.upper()):
+                country=line[4].upper()
+                return country
+    return "no country found"
+
+def extract_currency(country):
+    currency=""
+    with open('codes-all.csv','r',errors='ignore') as csv_file:
+        
         csv_reader = csv.reader(csv_file)
 
-        next(csv_reader)
-
         for line in csv_reader:
-            if(line[0].lower()==country):
-                return line[2]
-    
+            if(line[0].upper()==country.upper()):
+                currency=line[2].upper()
+                return currency
+            
     return "USD"
+
+    
 
         
 
 
-# sentence = "from US to Canada on 1/1/70 with two men and one women"
-sentence = "Flights from Boston to Madrid from June 7th to June 14th"
+sentence = "from Hanoi to Canada on 1/1/70 with two men and one women"
+#sentence = "Flights from Boston to Madrid from June 7th to June 14th"
 
-origin=extract_origin(sentence)
-print(origin)
-print(extract_origin(origin))
-print(extract_date(sentence))
-print(extract_adults(sentence))
-extract_adults(sentence)
+#origin=extract_origin(sentence)
+#print(origin)
+#print(extract_origin(origin))
+#print(extract_date(sentence))
+#print(extract_adults(sentence))
+#extract_adults(sentence)
+print(extract_origin(sentence))
+print(extract_currency(extract_country(extract_origin(sentence))))
