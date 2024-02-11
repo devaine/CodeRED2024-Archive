@@ -11,6 +11,7 @@ def get_flight_options(departure_city, arrival_city, departure_date, adults):
     try:
         response = amadeus.shopping.flight_offers_search.get(
             originLocationCode=departure_city,
+            currencyCode='USD',
             destinationLocationCode=arrival_city,
             departureDate=departure_date,
             adults=adults
@@ -34,12 +35,13 @@ def display_flight_details(flight):
     if flight:
         departure_time = flight['itineraries'][0]['segments'][0]['departure']['at']
         arrival_time = flight['itineraries'][0]['segments'][-1]['arrival']['at']
-        price = flight['price']['total']
+        currency = flight['price']['currency']
+        price = flight['price']['grandTotal']
         departure_city = None
         arrival_city = None
         print("Departure Time:", departure_time)
         print("Arrival Time:", arrival_time)
-        print("Price: EUR", price)
+        print("Price: $", price)
     else:
         print("No flight options found.")
 
