@@ -22,6 +22,10 @@ def get_flight_options(departure_city, arrival_city, departure_date, adults):
         return None
 
 def find_best_flight(flights):
+    if flights is None:
+        print("No flight options found.")
+        return None
+
     best_price = float('inf')
     best_flight = None
     for flight in flights:
@@ -30,6 +34,7 @@ def find_best_flight(flights):
             best_price = price
             best_flight = flight
     return best_flight
+
 
 def convert_to_usd(amount, currency):
     try:
