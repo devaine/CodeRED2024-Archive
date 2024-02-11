@@ -1,5 +1,4 @@
 from amadeus import Client
-import json
 
 # Initialize Amadeus client
 amadeus = Client(
@@ -8,13 +7,13 @@ amadeus = Client(
     log_level="warn"
 )
 
-def get_flight_options(departure_city, arrival_city, departure_date):
+def get_flight_options(departure_city, arrival_city, departure_date, adults):
     try:
         response = amadeus.shopping.flight_offers_search.get(
             originLocationCode=departure_city,
             destinationLocationCode=arrival_city,
             departureDate=departure_date,
-            adults=1  # Assuming one adult traveler
+            adults=adults
         )
         return response.data
     except Exception as e:
@@ -36,9 +35,11 @@ def display_flight_details(flight):
         departure_time = flight['itineraries'][0]['segments'][0]['departure']['at']
         arrival_time = flight['itineraries'][0]['segments'][-1]['arrival']['at']
         price = flight['price']['total']
+        departure_city = None
+        arrival_city = None
         print("Departure Time:", departure_time)
         print("Arrival Time:", arrival_time)
-        print("Price:", price)
+        print("Price: EUR", price)
     else:
         print("No flight options found.")
 
@@ -47,14 +48,19 @@ def main():
     departure_city = input("Enter departure city: ").upper()
     arrival_city = input("Enter arrival city: ").upper()
     departure_date = input("Enter departure date (YYYY-MM-DD): ")
+    adults = int(input("Enter number of adults: "))
 
     # Fetch flight options from Amadeus API
-    flights = get_flight_options(departure_city, arrival_city, departure_date)
+    flights = get_flight_options(departure_city, arrival_city, departure_date, adults)
 
     # Find the best flight
     best_flight = find_best_flight(flights)
 
     # Display flight details
+    print("***********")
+    print("For departure location: ",departure_city)
+    print("To arrival location: ",arrival_city)
+    print("Here is your best fligt option: ")
     display_flight_details(best_flight)
 
 if __name__ == "__main__":
