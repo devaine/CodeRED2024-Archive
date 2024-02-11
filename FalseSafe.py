@@ -31,17 +31,40 @@ def find_best_flight(flights):
             best_flight = flight
     return best_flight
 
+def convert_to_usd(amount, currency):
+    try:
+        response = amadeus.reference_data.symbols.get()
+        rates = response.data['currencies']
+        currency_rates = {rate['code']: rate['rate'] for rate in rates}
+        if currency == 'USD':
+            return amount
+        else:
+            return round(amount / currency_rates[currency], 2)
+    except Exception as e:
+        print("An error occurred while converting currency:", e)
+        return None
+
 def display_flight_details(flight):
     if flight:
         departure_time = flight['itineraries'][0]['segments'][0]['departure']['at']
         arrival_time = flight['itineraries'][0]['segments'][-1]['arrival']['at']
         currency = flight['price']['currency']
         price = flight['price']['grandTotal']
+        carrier = flight['itineraries'][0]['segments'][0]['carrierCode']
         departure_city = None
         arrival_city = None
+        
+        # Convert price to USD if currency is not USD
+        if currency != 'USD':
+            price_usd = convert_to_usd(price, currency)
+            if price_usd:
+                print("Price (USD):", price_usd)
+        else:
+            print("Price (USD):", price)
+        
+        print("Carrier:", carrier)
         print("Departure Time:", departure_time)
         print("Arrival Time:", arrival_time)
-        print("Price: $", price)
     else:
         print("No flight options found.")
 
