@@ -17,7 +17,10 @@ response = amadeus.shopping.flight_offers_search.get(
     originLocationCode='BOS',
     destinationLocationCode='JFK',
     departureDate='2024-06-06',
-    adults = 2
+    adults = 2,
+    returnDate='2024-06-06',
+    nonStop='true',
+    currencyCode='USD'
 
     
 )
