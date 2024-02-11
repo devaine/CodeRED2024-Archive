@@ -10,14 +10,18 @@ amadeus = Client(
     log_level = "warn"
 )
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 6fcdd7165c485eb894ec46001d94d5f06f421dc8
 response = amadeus.shopping.flight_offers_search.get(
     # First four are required for the API
     originLocationCode='MAD',
     destinationLocationCode='ATH',
     departureDate='2024-07-26',
     adults = 2
+<<<<<<< HEAD
     
 )
 resp = json.dumps(response.data, indent=4)
@@ -34,3 +38,9 @@ print(prices)
 print(cabins)
 print(currency)
 print(departures)
+=======
+)
+resp = json.dumps(response.data, indent=4)
+resp = json.loads(resp)
+print(resp)
+>>>>>>> 6fcdd7165c485eb894ec46001d94d5f06f421dc8
