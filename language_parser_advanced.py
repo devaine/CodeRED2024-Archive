@@ -82,6 +82,7 @@ def extract_currency(origin):
     with open('worldcities.csv','r') as csv_file:
         csv_reader = csv.reader(csv_file)
 
+        next(csv_reader)
         for line in csv_reader:
             if(line[0].lower()==origin.lower()):
                 country=line[4].lower()
@@ -89,6 +90,8 @@ def extract_currency(origin):
     
     with open('codes-all.csv','r') as csv_file:
         csv_reader = csv.reader(csv_file)
+
+        next(csv_reader)
 
         for line in csv_reader:
             if(line[0].lower()==country):
