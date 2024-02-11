@@ -6,6 +6,8 @@ pip install nltk
 
 import nltk
 import re
+import csv
+
 nltk.download('averaged_perceptron_tagger')
 nltk.download('maxent_ne_chunker')
 nltk.download('words')
@@ -17,6 +19,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
 from nltk.chunk import ne_chunk
+
 
 def remove_stopwords(text):
     ensw = stopwords.words('english')
@@ -74,6 +77,26 @@ def extract_adults(text):
 
     print(f"Number of people in the string: {people_count}")
 
+def extract_currency(origin):
+    country=""
+    with open('worldcities.csv','r') as csv_file:
+        csv_reader = csv.reader(csv_file)
+
+        for line in csv_reader:
+            if(line[0].lower()==origin.lower()):
+                country=line[4].lower()
+                break
+    
+    with open('codes-all.csv','r') as csv_file:
+        csv_reader = csv.reader(csv_file)
+
+        for line in csv_reader:
+            if(line[0].lower()==country):
+                return line[2]
+    
+    return "USD"
+
+        
 
 
 # sentence = "from US to Canada on 1/1/70 with two men and one women"
