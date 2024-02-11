@@ -7,6 +7,7 @@ pip install nltk
 import nltk
 import re
 import csv
+import pycountry
 
 nltk.download('averaged_perceptron_tagger')
 nltk.download('maxent_ne_chunker')
@@ -28,22 +29,36 @@ def remove_stopwords(text):
     return filterArr
 
 def extract_origin(text):
+
+    
     with open('worldcities.csv','r',errors='ignore') as csv_file:
         csv_reader = csv.reader(csv_file)
 
         
         for line in csv_reader:
             if(line[0].upper() in text.upper()):
-                return line[0]
-    
-    return "no city found"
+                upperCase=line[0].upper()
+                nameIndex = text.upper().index(upperCase)
+                if(text.upper().index('FROM')<nameIndex and text.upper().index('FROM')>0):
+                    return line[0]
+    return "city not found"
                 
     
 
 def extract_destination(text):
-    tokenized = word_tokenize(text)
-    origin = tokenized[tokenized.index('to')+1]
-    return origin
+
+    with open('worldcities.csv','r',errors='ignore') as csv_file:
+        csv_reader = csv.reader(csv_file)
+
+        
+        for line in csv_reader:
+            
+            if(line[0].upper() in text.upper()):
+                upperCase=line[0].upper()
+                nameIndex = text.upper().index(upperCase)
+                if(text.upper().index('TO')<nameIndex and text.upper().index('TO')>0):
+                    return line[0]
+    return "city not found"
 
 def extract_date(text):
     # Proper Format
@@ -115,7 +130,7 @@ def extract_currency(country):
         
 
 
-sentence = "from Rio De Janeiro to Canada on 1/1/70 with two men and one women"
+sentence = "To munich from rio de janeiro on 1/1/70 with two men and one women"
 #sentence = "Flights from Boston to Madrid from June 7th to June 14th"
 
 #origin=extract_origin(sentence)
@@ -125,4 +140,5 @@ sentence = "from Rio De Janeiro to Canada on 1/1/70 with two men and one women"
 #print(extract_adults(sentence))
 #extract_adults(sentence)
 print(extract_origin(sentence))
+print(extract_destination(sentence))
 print(extract_currency(extract_country(extract_origin(sentence))))
